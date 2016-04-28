@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <form onsubmit="submit_coin(); return false;" class="coinform">
+    {{ form.name.label }} {{ form.name(size=30) }}<br>
+    {{ form.weight.label }} {{ form.weight() }}<br>
+    {{ form.actual_weight.label }} {{ form.actual_weight() }}<br>
+    {{ form.metal.label }} {{ form.metal() }}<br>
+    {{ form.country.label }} {{ form.country(size=30) }}<br>
+    {{ form.ngc_url.label }} {{ form.ngc_url(size=100) }}<br>
+    {{ form.pcgs_url.label }} {{ form.pcgs_url(size=100) }}<br>
+    {{ form.jm_url.label }} {{ form.jm_url(size=100) }}<br>
+    {{ form.apmex_url.label }} {{ form.apmex_url(size=100) }}<br>
+    {{ form.shinybars_url.label }} {{ form.shinybars_url(size=100) }}<br>
+    {{ form.provident_url.label }} {{ form.provident_url(size=100) }}<br>
+    <input type="submit" value="Submit">
+  </form>
+
+{% endblock %}

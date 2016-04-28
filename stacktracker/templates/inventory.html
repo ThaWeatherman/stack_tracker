@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+  <form onsubmit="submit_item(); return false;" class="itemform">
+    {{ form.name.label }} {{ form.name() }}<br>
+    {{ form.purchase_price.label }} {{ form.purchase_price() }}<br>
+    {{ form.purchase_date.label }} {{ form.purchase_date() }}<br>
+    {{ form.purchased_from.label }} {{ form.purchased_from() }}<br>
+    {{ form.purchase_spot.label }} {{ form.purchase_spot() }}<br>
+    {{ form.sold.label }} {{ form.sold(onclick="sold_selected(this);") }}<br>
+    <div class="hide">
+    {{ form.sold_price.label }} {{ form.sold_price() }}<br>
+    </div>
+    <div class="hide">
+    {{ form.sold_date.label }} {{ form.sold_date() }}<br>
+    </div>
+    <div class="hide">
+    {{ form.sold_to.label }} {{ form.sold_to() }}<br>
+    </div>
+    <div class="hide">
+    {{ form.sold_spot.label }} {{ form.sold_spot() }}<br>
+    </div>
+    <div class="hide">
+    {{ form.shipping_charged.label }} {{ form.shipping_charged() }}<br>
+    </div>
+    <div class="hide">
+    {{ form.shipping_cost.label }} {{ form.shipping_cost() }}<br>
+    </div>
+    <input type="submit" value="Submit">
+  </form>
+
+  <script>
+    d3.selectAll('div.hide').style('display', 'none');
+  </script>
+{% endblock %}
