@@ -361,16 +361,20 @@ def confirm_email(token):
     except:
         flash('The confirmation link is invalid or has expired.', 'danger')
         return redirect(url_for('unconfirmed'))
-    user = User.query.filter_by(email=email).first_or_404()
-    if user.confirmed:
-        flash('Account already confirmed. Please login.', 'success')
-        return redirect(url_for('login'))
+    user = User.query.get(email)
+    if user:
+        if user.confirmed:
+            flash('Account already confirmed. Please login.', 'success')
+            return redirect(url_for('login'))
+        else:
+            user.confirmed = True
+            db.session.add(user)
+            db.session.commit()
+            flash('You have confirmed your account. Thanks!', 'success')
+            return redirect(url_for('index'))
     else:
-        user.confirmed = True
-        db.session.add(user)
-        db.session.commit()
-        flash('You have confirmed your account. Thanks!', 'success')
-        return redirect(url_for('home'))
+        flash('Not a valid email address.', 'error')
+        return redirect(url_for('unconfirmed'))
 
 
 @app.route('/unconfirmed')

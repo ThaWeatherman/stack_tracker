@@ -98,7 +98,7 @@ class User(db.Model):
     authenticated = db.Column(db.Boolean, default=False)
     confirmed = db.Column(db.Boolean, default=False)
     is_admin = db.Column(db.Boolean, default=False)
-    is_active = db.Column(db.Boolean, default=True)
+    active = db.Column(db.Boolean, default=True)
 
     def __init__(self, email, password, salt):
         self.email = email
@@ -109,7 +109,7 @@ class User(db.Model):
         return '<User %r>' % self.email
 
     def is_active(self):
-        return self.is_active
+        return self.active
 
     def get_id(self):
         return self.email

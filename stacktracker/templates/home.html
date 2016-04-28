@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% set active_page="home" %}
+{% set navigation_bar = [
+    (url_for('home'), 'home', 'Home'),
+    (url_for('logout'), 'logout', 'Logout'),
+    (url_for('inventory'), 'inventory', 'Inventory')
+    ] %}
+{% block content %}
+<p>Welcome home</p>
+{% endblock %}
