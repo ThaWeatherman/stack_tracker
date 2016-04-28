@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% set active_page="404" %}
+{% set navigation_bar = [
+    (url_for('index'), 'index', 'Home'),
+    ] %}
+{% block content %}
+<h1>Page Not Found</h1>
+<p>This is not the page you are looking for.</p>
+{% endblock %}

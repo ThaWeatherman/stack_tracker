@@ -26,6 +26,12 @@ hashing = Hashing(app)
 # ----------------
 # helper functions
 # ----------------
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(error, 'error')
+
+
 @login_manager.user_loader
 def user_loader(user_id):
     return User.query.get(user_id)
@@ -55,6 +61,15 @@ def check_confirmed(func):
         if current_user.confirmed is False:
             flash('Please confirm your account!', 'warning')
             return redirect(url_for('unconfirmed'))
+        return func(*args, **kwargs)
+    return decorated_function
+
+
+def check_admin(func):
+    @wraps(func)
+    def decorated_function(*args, **kwargs):
+        if current_user.is_admin is False:
+            return abort(404)
         return func(*args, **kwargs)
     return decorated_function
 
@@ -236,16 +251,23 @@ api.add_resource(ItemResource, '/api/item')
 # ------
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     return render_template('index.html')
 
 
 @app.route('/inventory')
+@login_required
+@check_confirmed
 def inventory():
     form = ItemForm()
     return render_template('inventory.html', form=form)
 
 
 @app.route('/administrator')
+@login_required
+@check_confirmed
+@check_admin
 def admin():
     form = CoinForm()
     return render_template('admin.html', form=form)
@@ -256,6 +278,14 @@ def admin():
 @check_confirmed
 def home():
     return render_template('home.html')
+
+
+# --------------
+# error handlers
+# --------------
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 
 # -------------------------------------
@@ -278,6 +308,8 @@ def login():
                 flash('Incorrect username or password.', 'error')
         else:
             flash('Incorrect username or password.', 'error')
+    if request.method == 'POST' and not form.validate():
+        flash_errors(form)
     return render_template('login.html', form=form)
 
 
@@ -316,6 +348,8 @@ def register():
         else:
             # user exists
             flash('A user with that email already exists.', 'error')
+    if request.method == 'POST' and not form.validate():
+        flash_errors(form)
     return render_template('register.html', form=form)
 
 

@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% set active_page="inventory" %}
+{% set navigation_bar = [
+    (url_for('home'), 'index', 'Home'),
+    (url_for('inventory'), 'inventory', 'Inventory'),
+    (url_for('logout'), 'logout', 'logout')
+    ] %}
 {% block content %}
   <form onsubmit="submit_item(); return false;" class="itemform">
     {{ form.name.label }} {{ form.name() }}<br>
