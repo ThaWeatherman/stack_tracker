@@ -5,6 +5,9 @@
     (url_for('inventory'), 'inventory', 'Inventory'),
     (url_for('logout'), 'logout', 'logout')
     ] %}
+{% if admin %}
+{% do navigation_bar.append((url_for('admin'), 'admin', 'Admin Panel')) %}
+{% endif %}
 {% block content %}
   <form onsubmit="submit_item(); return false;" class="itemform">
     {{ form.name.label }} {{ form.name() }}<br>

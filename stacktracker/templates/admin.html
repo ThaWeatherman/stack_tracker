@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+{% set active_page="admin" %}
+{% set navigation_bar = [
+    (url_for('home'), 'home', 'Home'),
+    (url_for('logout'), 'logout', 'Logout'),
+    (url_for('inventory'), 'inventory', 'Inventory')
+    ] %}
+{% if admin %}
+{% do navigation_bar.append((url_for('admin'), 'admin', 'Admin Panel')) %}
+{% endif %}
 {% block content %}
   <form onsubmit="submit_coin(); return false;" class="coinform">
     {{ form.name.label }} {{ form.name(size=30) }}<br>

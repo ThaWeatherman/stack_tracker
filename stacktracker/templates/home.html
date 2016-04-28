@@ -5,6 +5,9 @@
     (url_for('logout'), 'logout', 'Logout'),
     (url_for('inventory'), 'inventory', 'Inventory')
     ] %}
+{% if admin %}
+{% do navigation_bar.append((url_for('admin'), 'admin', 'Admin Panel')) %}
+{% endif %}
 {% block content %}
 <p>Welcome home</p>
 {% endblock %}

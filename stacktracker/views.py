@@ -261,7 +261,7 @@ def index():
 @check_confirmed
 def inventory():
     form = ItemForm()
-    return render_template('inventory.html', form=form)
+    return render_template('inventory.html', form=form, admin=current_user.is_admin)
 
 
 @app.route('/administrator')
@@ -270,14 +270,14 @@ def inventory():
 @check_admin
 def admin():
     form = CoinForm()
-    return render_template('admin.html', form=form)
+    return render_template('admin.html', form=form, admin=current_user.is_admin)
 
 
 @app.route('/home')
 @login_required
 @check_confirmed
 def home():
-    return render_template('home.html')
+    return render_template('home.html', admin=current_user.is_admin)
 
 
 # --------------
